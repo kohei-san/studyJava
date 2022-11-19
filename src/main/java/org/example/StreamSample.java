@@ -24,18 +24,22 @@ public class StreamSample {
         var result = new ArrayList<String>();
         var count = 0;
         var bool = true;
+        var oneOfThemHasTarget = false;
         for (String s : list) {
             if (s.length() == 5) {
-                System.out.println(s);
                 result.add(s);
                 count++;
+                if (!s.contains("p")) {
+                    bool &= false;
+                }
             }
-            if (!s.contains("p")) {
-                bool &= false;
+            if (s.contains("p")) {
+                oneOfThemHasTarget = true;
             }
         }
-        System.out.println(result);
-        System.out.println(count);
-        System.out.println(bool);
+        System.out.println("result: " + result);
+        System.out.println("count: " + count);
+        System.out.println("bool: " + bool);
+        System.out.println("oneOfThemHasTarget: " + oneOfThemHasTarget);
     }
 }
