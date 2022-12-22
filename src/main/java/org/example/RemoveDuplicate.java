@@ -2,8 +2,7 @@ package org.example;
 
 public class RemoveDuplicate {
     public static void main(String[] args) {
-        var data = "abccbaabcc";
-
+        var data = "abcde";
         var builder = new StringBuilder();
 //        for (int i = 0; i < data.length(); i++) {
 //            var ch = data.charAt(i);
@@ -14,12 +13,22 @@ public class RemoveDuplicate {
 //        }
 
         char prev = 0;
+        int count = 1;
         for (char ch : data.toCharArray()) {
             if (ch == prev) {
                 continue;
             }
+
+            if (count % 2 == 0) {
+                builder.append(ch);
+                builder.append(prev);
+            }
+
+            if (count >= data.length()) {
+                builder.append(ch);
+            }
             prev = ch;
-            builder.append(ch);
+            count++;
         }
 
         var result = builder.toString();
