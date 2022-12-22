@@ -5,13 +5,23 @@ public class RemoveDuplicate {
         var data = "abccbaabcc";
 
         var builder = new StringBuilder();
-        for (int i = 0; i < data.length(); i++) {
-            var ch = data.charAt(i);
-            if (i > 0 && ch == data.charAt(i - 1)) {
+//        for (int i = 0; i < data.length(); i++) {
+//            var ch = data.charAt(i);
+//            if (i > 0 && ch == data.charAt(i - 1)) {
+//                continue;
+//            }
+//            builder.append(ch); // 配列に10進数のasciiコードが格納される。
+//        }
+
+        char prev = 0;
+        for (char ch : data.toCharArray()) {
+            if (ch == prev) {
                 continue;
             }
-            builder.append(ch); // 配列に10進数のasciiコードが格納される。
+            prev = ch;
+            builder.append(ch);
         }
+
         var result = builder.toString();
         System.out.println(data);
         System.out.println(result);
