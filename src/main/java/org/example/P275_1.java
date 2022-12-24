@@ -3,7 +3,7 @@ package org.example;
 public class P275_1 {
 
     enum FloatState {
-        START, INT, FRAC_START, FRAC, ZERO
+        START, INT, FRAC_START, FRAC, ZERO, FRAC_ZERO
     }
     static boolean check(String data) {
         var state = FloatState.START;
@@ -22,6 +22,8 @@ public class P275_1 {
                 case ZERO -> {
                     if (ch == '.') {
                         state = FloatState.FRAC_START;
+                    } else if (ch == '0') {
+                        state = FloatState.FRAC_ZERO;
                     } else {
                         return false;
                     }
@@ -35,9 +37,15 @@ public class P275_1 {
                         return false;
                     }
                 }
-                case FRAC_START, FRAC -> {
-                    if (ch >= '0' && ch <= '9') {
+                /*
+                // FRAC_ZEROはFRAC_STARTと同じ条件のためまとめることもできるが、
+                コードを追いかける際に背景を知らなければ理解が難しいため、あえて残すことの方がいい場合もある。
+                 */
+                case FRAC_START, FRAC, FRAC_ZERO -> {
+                    if (ch >= '1' && ch <= '9') {
                         state = FloatState.FRAC;
+                    } else if (ch == '0') {
+                        state = FloatState.FRAC_ZERO;
                     } else {
                         return false;
                     }
@@ -45,15 +53,12 @@ public class P275_1 {
             }
         }
 
-
-        switch (state) {
-            case INT -> {return true;}
-            case ZERO, FRAC -> {
-                if (data.charAt(data.length() - 1) == '0') {return false;}
-                else {return true;}
-            }
-            default -> {return false;}
-        }
+        return switch (state) {
+            case INT -> true;
+            case ZERO -> true;
+            case FRAC -> true;
+            default -> false;
+        };
     }
 
     public static void main(String[] args) {
