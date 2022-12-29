@@ -20,6 +20,33 @@ public class TraverseDeep {
     }
 
     static boolean traverse(int[][] map, int curX, int curY) {
+//        switch (map[curX][curY]){
+//            case 1:
+//                return false;
+//            case 2:
+//                break;
+//            default:
+//                map[curX][curY] = 3;
+//                traverse(map, curX, curY);
+//                return true;
+//        }
+        switch (map[curY][curX]) {
+//            case 1: return false;
+//            case 2: return true;
+//            default: break; // これではエラーになる。新たに加えた3がいるから。
+            case 0: break;
+            case 2: return true;
+            default: return false;
+        }
+        map[curY][curX] = 3;
+
+        if (traverse(map, curX + 1, curY) ||
+            traverse(map, curX - 1, curY) ||
+            traverse(map, curX, curY + 1) ||
+            traverse(map, curX, curY - 1)) {
+            return true;
+        }
+        map[curY][curX] = 0;
         return false;
     }
 }
